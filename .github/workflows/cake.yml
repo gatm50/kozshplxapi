@@ -1,0 +1,26 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-pack:
+    runs-on: ubuntu-latest
+    env:
+      publishToNuGet: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'true' || 'false' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Run Cake pipeline (Pack)
+        run: dotnet run ci-pipeline.cs -- --target Pack --configuration Release --publishToNuGet ${{ env.publishToNuGet }} --nugetApiKey "${{ secrets.KOZSH_NUGET_API_KEY }}"
