@@ -56,28 +56,24 @@ Task("Pack")
     });
 });
 
-if (publishToNuGet)
-{
-    Task("PublishNuGet")
-        .IsDependentOn("Pack")
-        .WithCriteria(() => !string.IsNullOrWhiteSpace(nugetApiKey))
-        .Does(() =>
+Task("PublishNuGet")
+    .IsDependentOn("Pack")
+    .WithCriteria(() => !string.IsNullOrWhiteSpace(nugetApiKey))
+    .Does(() =>
+    {
+        var packageFiles = GetFiles($"{artifactsDirectory}/*.nupkg")
+            .Where(p => !p.FullPath.EndsWith(".symbols.nupkg", StringComparison.OrdinalIgnoreCase));
+
+        foreach (var packageFile in packageFiles)
         {
-            var packageFiles = GetFiles($"{artifactsDirectory}/*.nupkg")
-                .Where(p => !p.FullPath.EndsWith(".symbols.nupkg", StringComparison.OrdinalIgnoreCase));
-
-            foreach (var packageFile in packageFiles)
+            DotNetNuGetPush(packageFile.FullPath, new DotNetNuGetPushSettings
             {
-                DotNetNuGetPush(packageFile.FullPath, new DotNetNuGetPushSettings
-                {
-                    Source = nugetSource,
-                    ApiKey = nugetApiKey,
-                    SkipDuplicate = true,
-                });
-            }
-        });
-}
-
+                Source = nugetSource,
+                ApiKey = nugetApiKey,
+                SkipDuplicate = true,
+            });
+        }
+    });
 
 //////////////////////////////////////////////////////////////////////
 // EXECUTION
