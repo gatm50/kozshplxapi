@@ -11,7 +11,7 @@ jobs:
   build-pack:
     runs-on: ubuntu-latest
     env:
-      publishToNuGet: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'true' || 'false' }}
+      finaltarget: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'PublishNuGet' || 'Pack' }}
 
     steps:
       - name: Checkout
@@ -22,5 +22,5 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      - name: Run Cake pipeline (Pack)
-        run: dotnet run ci-pipeline.cs -- --target Pack --configuration Release --publishToNuGet ${{ env.publishToNuGet }} --nugetApiKey "${{ secrets.KOZSH_NUGET_API_KEY }}"
+      - name: Run Cake Pipeline
+        run: dotnet run ci-pipeline.cs -- --target ${{ env.finaltarget }} --configuration Release --nugetApiKey "${{ secrets.KOZSH_NUGET_API_KEY }}"
