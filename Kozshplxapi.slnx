@@ -4,7 +4,9 @@
     <File Path=".gitignore" />
     <File Path="ci-pipeline.cs" />
     <File Path="LICENSE" />
+    <File Path="OpenApiSpec/plex-openapi-v1_2_0.json" />
     <File Path="README.md" />
   </Folder>
+  <Project Path="Kozshplxapi.Tests/Kozshplxapi.Tests.csproj" Id="db90acd6-25f4-4f0f-8b97-1f3141fc6d7a" />
   <Project Path="Kozshplxapi/Kozshplxapi.csproj" />
 </Solution>
