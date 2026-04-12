@@ -10,6 +10,12 @@ namespace Kozshplxapi.Library.Collections.Item
 {
     public partial class WithCollectionItemRequestBuilder
     {
+        /// <summary>The items property</summary>
+        public global::Kozshplxapi.Library.Collections.Item.Posters.PostersRequestBuilder Posters
+        {
+            get => new global::Kozshplxapi.Library.Collections.Item.Posters.PostersRequestBuilder(PathParameters, RequestAdapter);
+        }
+
         public async Task PutAsync(
             int sectionId,
             Action<RequestConfiguration<WithCollectionItemRequestBuilderPutQueryParameters>> requestConfiguration = default,
@@ -44,7 +50,6 @@ namespace Kozshplxapi.Library.Collections.Item
         /// <summary>
         /// Modify a collection in the library
         /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class WithCollectionItemRequestBuilderPutQueryParameters
         {
             /// <summary>The type of Collection to modify</summary>

@@ -31,4 +31,10 @@
     <ProjectReference Include="..\Kozshplxapi\Kozshplxapi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Library\Collections\Assets\brave-tin-soldier-poster-1934.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

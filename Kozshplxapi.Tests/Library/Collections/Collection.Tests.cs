@@ -6,6 +6,19 @@ namespace Kozshplxapi.Tests.Library.Collections
     public class Collection(TestConfigFixture cfg) : IClassFixture<TestConfigFixture>
     {
         private readonly TestConfigFixture _cfg = cfg ?? throw new ArgumentNullException(nameof(cfg));
+        private const string PosterFileName = "brave-tin-soldier-poster-1934.jpg";
+
+        private static byte[] LoadPosterImage()
+        {
+            var fullPathImage = Path.Combine("./Library/Collections/Assets", PosterFileName);
+
+            if (File.Exists(fullPathImage))
+            {
+                return File.ReadAllBytes(fullPathImage);
+            }
+
+            throw new FileNotFoundException($"Poster image '{PosterFileName}' was not found in assets folder.");
+        }
 
         private ApiClient CreateClient()
         {
@@ -70,6 +83,33 @@ namespace Kozshplxapi.Tests.Library.Collections
                 {
                     requestConfiguration.QueryParameters.TypeId = 18;
                 }));
+        }
+
+        [Fact]
+        public void ToPostersPostRequestInformation_BuildsExpectedEndpoint()
+        {
+            var client = CreateClient();
+            var image = LoadPosterImage();
+
+            var requestInfo = client.Library.Collections[14343].Posters.ToPostRequestInformation(image);
+
+            var uriProperty = requestInfo.GetType().GetProperty("URI") ?? requestInfo.GetType().GetProperty("Uri");
+            Assert.NotNull(uriProperty);
+
+            var uri = uriProperty!.GetValue(requestInfo) as Uri;
+            Assert.NotNull(uri);
+            Assert.Contains("/library/collections/14343/posters", uri!.ToString());
+        }
+
+        [Fact]
+        public async Task UploadPoster_WithJwtAuth_Returns200Ok()
+        {
+            var client = CreateClient();
+            var image = LoadPosterImage();
+
+            await client.Library.Collections[14343].Posters.PostAsync(
+                image,
+                cancellationToken: TestContext.Current.CancellationToken);
         }
     }
 }
