@@ -109,8 +109,16 @@ namespace Kozshplxapi.Library.Collections
             public string SectionId { get; set; }
 #endif
             /// <summary>Whether this is a smart collection.  Defaults to false</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
             [QueryParameter("smart")]
-            public bool? Smart { get; set; }
+            public int? Smart { get; set; }
+#nullable restore
+#else
+            [QueryParameter("smart")]
+            public int Smart { get; set; }
+#endif
+
             /// <summary>The title of this collection</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
