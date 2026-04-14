@@ -31,6 +31,7 @@ namespace Kozshplxapi.Tests.Hubs.Search
 
             Assert.NotNull(searchResult);
             Assert.NotNull(searchResult!.MediaContainer);
+            Assert.Equal(title, searchResult?.MediaContainer?.Hub?[0]?.Metadata.FirstOrDefault()?.Title);
         }
     }
 }
