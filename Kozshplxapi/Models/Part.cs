@@ -56,7 +56,7 @@ namespace Kozshplxapi.Models
         /// <summary>The optimizedForStreaming property</summary>
         public bool? OptimizedForStreaming { get; set; }
         /// <summary>The size of the media, in bytes</summary>
-        public int? Size { get; set; }
+        public long? Size { get; set; }
         /// <summary>The Stream property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -106,7 +106,7 @@ namespace Kozshplxapi.Models
                 { "id", n => { Id = n.GetIntValue(); } },
                 { "key", n => { Key = n.GetObjectValue<UntypedNode>(UntypedNode.CreateFromDiscriminatorValue); } },
                 { "optimizedForStreaming", n => { OptimizedForStreaming = n.GetBoolValue(); } },
-                { "size", n => { Size = n.GetIntValue(); } },
+                { "size", n => { Size = n.GetLongValue(); } },
                 { "Stream", n => { Stream = n.GetCollectionOfObjectValues<global::Kozshplxapi.Models.StreamObject>(global::Kozshplxapi.Models.StreamObject.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "videoProfile", n => { VideoProfile = n.GetObjectValue<UntypedNode>(UntypedNode.CreateFromDiscriminatorValue); } },
             };
@@ -126,7 +126,7 @@ namespace Kozshplxapi.Models
             writer.WriteIntValue("id", Id);
             writer.WriteObjectValue<UntypedNode>("key", Key);
             writer.WriteBoolValue("optimizedForStreaming", OptimizedForStreaming);
-            writer.WriteIntValue("size", Size);
+            writer.WriteLongValue("size", Size);
             writer.WriteCollectionOfObjectValues<global::Kozshplxapi.Models.StreamObject>("Stream", Stream);
             writer.WriteObjectValue<UntypedNode>("videoProfile", VideoProfile);
             writer.WriteAdditionalData(AdditionalData);
