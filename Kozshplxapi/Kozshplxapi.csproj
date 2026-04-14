@@ -5,7 +5,7 @@
 
     <!-- Package identity -->
     <PackageId>Kozshplxapi</PackageId>
-    <Version>1.3.0</Version>
+    <Version>1.3.1</Version>
     <Authors>Kozsh</Authors>
     <Description>Rest API Client for Plex</Description>
 
